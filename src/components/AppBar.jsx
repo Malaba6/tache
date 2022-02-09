@@ -11,7 +11,7 @@ import {
 import { ExitToApp } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 
-import { useAuth } from '@context/useAuth'
+import { useAuth } from 'context/useAuth'
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null)

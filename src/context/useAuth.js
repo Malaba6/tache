@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from  "react"
 import PropTypes from 'prop-types'
 
-const AuthContext = createContext({})
+const AuthContext = createContext([{}, () => {}])
 const initialState = {user: null, loading: true, isAuthenticated: false}
 
 const reducer = (state = initialState, action) => {
