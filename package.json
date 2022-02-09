@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:coverage": "jest --coverage --colors"
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -27,7 +28,64 @@
     "web3": "^1.7.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "enzyme": "^3.11.0",
     "eslint": "8.8.0",
-    "eslint-config-next": "12.0.10"
+    "eslint-config-next": "12.0.10",
+    "jest": "^27.5.1",
+    "jest-canvas-mock": "^2.3.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": ["babel-jest", {
+        "presets": ["@babel/preset-env", "next/babel"]
+      }]
+    },
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ],
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/enzyme.config.js"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx",
+      "ts",
+      "tsx",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.js",
+      "<rootDir>/src/**/*.jsx",
+      "!<rootDir>/coverage/**/*.*",
+      "!<rootDir>/build/**/*.*",
+      "!<rootDir>/cypress/**/*.*"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|JPG|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }

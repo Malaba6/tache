@@ -3,12 +3,12 @@ import { SnackbarProvider } from 'notistack'
 import { useTheme } from "@mui/material/styles"
 import { Box } from "@mui/material"
 
-import AppBar from "@components/AppBar"
-import Main from "@components/Main"
+import AppBar from "components/AppBar"
+import Main from "components/Main"
 // import "./App.css"
-import useNetwork from "@hooks/useNetwork"
-import useContract from "@hooks/useContract"
-import Notify from "@components/Notify"
+import useNetwork from "hooks/useNetwork"
+import useContract from "hooks/useContract"
+import Notify from "components/Notify"
 
 
 const Home = () => { 

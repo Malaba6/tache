@@ -1,7 +1,7 @@
 import {
   Html, Main, NextScript, Head
 } from 'next/document';
-import theme from '../../styles/theme'
+import theme from 'styles/theme'
 
 export default function Document() {
     return (
