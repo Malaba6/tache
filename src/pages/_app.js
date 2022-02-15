@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import AdapterMoment from '@mui/lab/AdapterMoment'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
-import createEmotionCache from '@utils/emotionCache'
-import theme from '@styles/theme'
-import { ColorModeProvider } from '@context/themeContext'
-import { AuthProvider } from '@context/useAuth'
-import '@styles/globals.css'
+import createEmotionCache from 'utils/emotionCache'
+import theme from 'styles/theme'
+import { ColorModeProvider } from 'context/themeContext'
+import { AuthProvider } from 'context/useAuth'
+import 'styles/globals.css'
 
 const clientSideEmotionCache = createEmotionCache()
 
