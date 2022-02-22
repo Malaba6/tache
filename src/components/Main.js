@@ -4,19 +4,23 @@ import {
 } from "@mui/material";
 import { useTheme } from '@mui/material/styles'
 import { BlurCircular, Brightness7, Brightness4 } from "@mui/icons-material"
-import moment from 'moment'
+import moment, { now } from 'moment'
+require("moment/min/locales.min")
 import { TransitionGroup } from 'react-transition-group'
 import { v4 as uuid } from 'uuid'
+import { useTranslation } from 'next-i18next'
+
 import Task from "./Task"
 import { getDatesMenu, sortList } from "../utils"
 import { useDarkMode } from "../hooks/useDarkMode";
 
 const Main = ({
   createTask, tasks, setTasks, toggleTaskChange,
-  deleteTask
+  deleteTask, locale
 }) => {
   const theme = useTheme()
   const { toggleColorMode } = useDarkMode()
+  const { t } = useTranslation()
 
   const [selectedItem, setSelectedItem] = useState(1)
   const [date, setDate] = useState(new Date())
@@ -25,7 +29,7 @@ const Main = ({
   const [tasks_, set_Tasks] = useState([])
   
   const [menuLabels, setMenuLabels] = useState([{
-    label: 'Sort All by Date',
+    label: t('home:sort'),
     value: 1
   }])
 
@@ -67,7 +71,19 @@ const Main = ({
       : 'Good evening'
   }
 
+  const getTranslation = (greeting) => {
+    switch (greeting) {
+      case 'Good morning':
+        return t('home:morning')
+      case 'Good afternoon':
+        return t('home:afternoon')
+      case 'Good evening':
+        return t('home:evening')
+    }
+  }
+
   const tasks__ = tasks_.length ? tasks_ : sortList(tasks)
+  const greeting = getGreetings(moment().hour())
   
   return (
     <Box sx={{
@@ -90,12 +106,14 @@ const Main = ({
           alignItems="flex-start"
           xs={10} sm={11}>
             <Typography variant="h4">
-              {`${getGreetings(moment().hour())}, Champion`}</Typography>
+              {t("home:greeting", { greeting: getTranslation(greeting) })}
+            </Typography>
             <Typography
               sx={{
                 fontSize: '1.5em',
                 color: 'text.secondary',
-              }}>It's {moment(new Date()).format('dddd, MMM DD')}</Typography>
+              }}>{`${t("home:time")} ${moment(new Date())
+                .locale(locale).format('dddd, MMM DD')}`}</Typography>
         </Grid>
       </Grid>
       <Box container item justifyContent='center' direction='column' alignItems='center' sx={{
@@ -105,6 +123,7 @@ const Main = ({
           isNewTask
           selectedItem={selectedItem}
           task={task}
+          locale={locale}
           date={date}
           handleTaskChange={handleTaskChange}
           handleMenuChange={handleMenuChange}
@@ -120,6 +139,7 @@ const Main = ({
                   task={content}
                   date={new Date(parseInt(date))}
                   isDone={isDone}
+                  locale={locale}
                   tasks={tasks}
                   setTasks={setTasks}
                   deleteTask={deleteTask}
@@ -133,8 +153,8 @@ const Main = ({
       <Box>
         <Tooltip
           title={theme.palette.mode === 'dark'
-            ? 'Change to Light Mode'
-            : 'Change to Dark Mode'}>
+            ? t('home:light')
+            : t('home:dark')}>
           <IconButton
             onClick={toggleColorMode}
             sx={{

@@ -1,12 +1,12 @@
 import { createContext, useState, useMemo } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { pink, blue, grey } from '@mui/material/colors';
+import { pink, blue, grey } from '@mui/material/colors'
 
 export const ThemeContext = createContext({toggleColorMode: () => {}})
 
 export const ColorModeProvider = ({ children }) => {
   const [mode, setMode] = useState('dark')
-  console.log('mode', mode)
+
   const colorMode = useMemo(() => ({
     toggleColorMode: () => {
       setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
@@ -21,7 +21,7 @@ export const ColorModeProvider = ({ children }) => {
             primary: {
               main: '#fff',
               dark: grey[400],
-              light: grey[100],
+              light: grey[200],
             },
             info: {
               main: pink[600],
