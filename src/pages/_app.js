@@ -15,7 +15,7 @@ const clientSideEmotionCache = createEmotionCache()
 
 function MyApp({ Component, emotionCahe = clientSideEmotionCache, pageProps }) {
   const { locale } = pageProps
-  console.log('MyApp _app.js locale ', locale)
+
   return <CacheProvider value={emotionCahe}>
     <LangProvider locale={locale}>
       <AuthProvider>
@@ -34,6 +34,6 @@ export default appWithTranslation(MyApp)
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
+  emotionCahe: PropTypes.object,
   pageProps: PropTypes.object.isRequired,
 }

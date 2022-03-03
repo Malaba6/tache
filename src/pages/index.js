@@ -7,10 +7,10 @@ import useLang from 'hooks/useLang'
 export default function HomePage({ locale }) {
   const [lang, setLang] = useLang()
 
-  useEffect(() => {
-    console.log('HomePage', locale)
-    setLang(locale)
-  }, [locale])
+  // useEffect(() => {
+  //   console.log('HomePage', locale)
+  //   setLang(locale)
+  // }, [lang])
 
   return <Home locale={locale} />
 }

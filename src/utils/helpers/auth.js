@@ -3,7 +3,8 @@ import { config } from 'dotenv'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 import { pick } from 'lodash'
-import { RefreshToken } from '../../../sequelize/models'
+
+import { RefreshToken } from 'sequelizeDb/models'
 
 config()
 

@@ -39,22 +39,6 @@ const validationRules = {
   email: Joi.string()
     .email({ minDomainSegments: 2})
     .required(),
-
-  user: Joi.string()
-    .required()
-    .error(errors => {
-      errors.forEach(error => {
-        switch(error.code) {
-          case 'any.required':
-            error.message = 'Email or Username is required'
-            break
-          default:
-            break
-
-        }
-      })
-      return errors
-    }),
   
   password: Joi.string()
     .regex(/^.{3,}$/)
@@ -110,7 +94,7 @@ export const signupUserSchema = Joi.object().keys({
 })
 
 export const loginUserSchema = Joi.object().keys({
-  user: validationRules.user,
+  email: validationRules.email,
   password: validationRules.password
 })
 

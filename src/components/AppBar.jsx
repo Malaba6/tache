@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import {
-  Grid, Button, IconButton, Avatar, Menu, MenuItem,
-  ListItem, ListItemIcon, ListItemText, List, Collapse, Select,
+  Grid, IconButton, Avatar, Menu, MenuItem,
+  ListItem, ListItemIcon, ListItemText, Collapse, Select,
 } from '@mui/material'
 import {
   Logout, AccountCircleRounded, Login,
@@ -17,75 +17,15 @@ import TranslateIcon from '@mui/icons-material/Translate';
 
 import { useAuth } from 'context/useAuth'
 import useLang from 'hooks/useLang'
+import { getLangageObj } from 'utils/index'
+import { languages, menus } from 'utils/constants'
 
-const UserMenu = ({ lang: l }) => {
+function UserMenu() {
   const { t } = useTranslation()
-  const [lang] = useLang()
+  const [lang, setLang] = useLang()
   const [ {isAuthenticated, user } ] = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
-  const language = () => {
-    switch(l) {
-      case 'en':
-        return 'gb'
-      case 'sw':
-        return 'tz'
-      default:
-        return l
-    }
-  }
 
-  console.log('Lang in Menu ', l, lang)
-
-  
-  // console.log('SL', selectedLang)
-
-  const menus = [
-    {
-      label: 'Logout',
-    },
-    {
-      label: 'Signup',
-      href: '/signup',
-    },
-    {
-      label: 'Login',
-      href: '/login',
-    }
-  ]
-  const languages = [
-    {
-      id: 1, code: 'en', label: 'English',
-      src: 'https://flagcdn.com/w20/gb.png',
-      srcSet: 'https://flagcdn.com/w40/gb.png 2x'
-    },
-    {
-      id: 2, code: 'fr', label: 'Français',
-      src: 'https://flagcdn.com/w20/fr.png',
-      srcSet: 'https://flagcdn.com/w40/fr.png 2x'
-    },
-    {
-      id: 3, code: 'es', label: 'Español',
-      src: 'https://flagcdn.com/w20/es.png',
-      srcSet: 'https://flagcdn.com/w40/es.png 2x'
-    },
-    {
-      id: 4, code: 'de', label: 'Deutsch',
-      src: 'https://flagcdn.com/w20/de.png',
-      srcSet: 'https://flagcdn.com/w40/de.png 2x'
-    },
-    {
-      id: 5, code: 'rw', label: 'Kinyarwanda',
-      src: 'https://flagcdn.com/w20/rw.png',
-      srcSet: 'https://flagcdn.com/w40/rw.png 2x'
-    },
-    {
-      id: 6, code: 'sw', label: 'Swahili',
-      src: 'https://flagcdn.com/w20/tz.png',
-      srcSet: 'https://flagcdn.com/w40/tz.png 2x'
-    },
-  ]
-
-  const getLangageObj = (code) => languages.find(l => l.code === code)
   const [selectedLang, setSelectedLang] = useState(getLangageObj(lang))
 
   const handleClick = (e) => setAnchorEl(e.currentTarget)
@@ -95,6 +35,7 @@ const UserMenu = ({ lang: l }) => {
       target: { value },
     } = e
     setSelectedLang(value)
+    setLang(value.code)
   }
 
   return <Grid
@@ -107,7 +48,7 @@ const UserMenu = ({ lang: l }) => {
       renderValue={(selected) => {
         if (selected.length === 0) {
           return <img
-            alt={`English`}
+            alt="English"
             src='https://flagcdn.com/w20/gb.png'
             style={{ marginRight: 8 }}
           />
@@ -131,7 +72,6 @@ const UserMenu = ({ lang: l }) => {
           selected
           sx={{
             background: isSelected && '#444',
-            //change color on hover
             ':hover': {
               background: '#666'
             }
@@ -174,7 +114,7 @@ const UserMenu = ({ lang: l }) => {
         {menus.map(({ label, href }) => {
           switch(label) {
             case 'Logout':
-              return isAuthenticated && <MenuItem key={label} button onClick={handleLogout}>
+              return isAuthenticated && <MenuItem key={label} button onClick={() => null}>
                 <ListItemIcon>
                   <Logout />
                 </ListItemIcon>
@@ -194,6 +134,8 @@ const UserMenu = ({ lang: l }) => {
                 </ListItemIcon>
                 <ListItemText>{t('login')}</ListItemText>
               </MenuItem>
+            default:
+              return null
           }
         })}
       </Menu>
@@ -204,7 +146,7 @@ const UserMenu = ({ lang: l }) => {
 
 export default function ButtonAppBar() {
   const theme = useTheme()
-  const [ {isAuthenticated }, dispatch] = useAuth()
+  // const [ {isAuthenticated }, dispatch] = useAuth()
   const [lang] = useLang()
 
   const logoColors = theme.palette.mode === 'light'

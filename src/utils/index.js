@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { languages } from './constants'
 
 export const sortList = (list) => list.sort((a, b) => b.date - a.date)
 
@@ -60,3 +61,5 @@ export const getDatesMenu = ({
   setMenuLabels(tempMenuLabels)
   setWhen(tempWhen)
 }
+
+export const getLangageObj = (code) => languages.find(l => l.code === code)

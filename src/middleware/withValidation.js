@@ -7,10 +7,6 @@ import { options } from 'utils/helpers/schema'
  * @returns error message if request not valid, otherwise proceed to the request handler
  */
 export const withValidation = (handler, schema) => (req, res) => {
-  if (req.body.publicAddress) {
-    return handler(req, res)
-  }
-  
   const { error } = schema.validate(req.body, options)
 
   if (error) {
