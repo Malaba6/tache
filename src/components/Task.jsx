@@ -5,18 +5,22 @@ import {
   MenuItem,
   Select, Tooltip, Typography, Zoom
 } from "@mui/material";
-import { DateTimePicker, MobileDatePicker } from "@mui/lab"
+import { DateTimePicker } from "@mui/lab"
 import { useTheme } from "@mui/material/styles"
 import moment from 'moment'
 import { DeleteOutline } from "@mui/icons-material"
+import { useTranslation } from 'next-i18next'
 
 const Task = ({
   isNewTask, selectedItem, task, isDone,
   date, handleTaskChange, handleMenuChange,
   handleDateChange, menuLabels, handleAddTask, id,
   newTasks: _tasks, toggleTaskChange, deleteTask,
+  locale
 }) => {
+  const { t } = useTranslation()
   const theme = useTheme();
+  const date_ = moment(date).locale(locale)
   
   const hanleTaskStatusChange = async () => await toggleTaskChange(id)
   const handleDeleteTask = async () => await deleteTask(id)
@@ -53,7 +57,7 @@ const Task = ({
           flexGrow: 1,
         }}>
           <Tooltip  
-            title={isDone ? 'Mark as not done' : 'Mark as done'}
+            title={isDone ? t("home:notDone") : t("home:done")}
             placement="top" arrow>
             <Checkbox
               disabled={isNewTask}
@@ -71,7 +75,7 @@ const Task = ({
             value={task}
             readOnly={!isNewTask}
             onKeyPress={(e) => e.key === 'Enter' && handleAddTask()}
-            placeholder="What's your plan today?"
+            placeholder={t('home:plan')}
             multiline
             sx={{
               textDecoration: isDone ? 'line-through' : 'none',
@@ -79,7 +83,7 @@ const Task = ({
               flexGrow: 1,
               mr: 1,
             }}
-            inputProps={{ 'aria-label': "what's your plan today?"}} />
+            inputProps={{ 'aria-label': t('home:plan') }} />
         </Box>
         <Box sx={{
           display: 'flex',
@@ -89,8 +93,8 @@ const Task = ({
         }}>
           {isNewTask
             ? <DateTimePicker
-                label="Pick date and time"
-                value={date}
+                label={t('home:pick')}
+                value={date_}
                 inputFormat="MMM Do YY, hh:mm A"
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -130,9 +134,9 @@ const Task = ({
                       borderRadius: '0.7em',
                       fontSize: { xs: '0.6rem', sm: '0.8rem' },
                     }}>
-                    {moment(date).format('D MMM, hh A')}
+                    {moment(date).locale(locale).format('D MMM, hh A')}
                   </Typography>
-                  <Tooltip title="Delete" arrow placement="top">
+                  <Tooltip title={t('delete')} arrow placement="top">
                     <IconButton
                       color="info"
                       onClick={handleDeleteTask}>
@@ -150,7 +154,7 @@ const Task = ({
                   height: 30,
                 }} />
               <FormControl>
-                <InputLabel id="my-todo-list">Todos</InputLabel>
+                <InputLabel id="my-todo-list">{t('home:todos')}</InputLabel>
                 <Select
                   labelId="my-todo-list"
                   id="my-todo-menu"

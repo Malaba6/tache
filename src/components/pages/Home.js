@@ -11,8 +11,7 @@ import useContract from "hooks/useContract"
 import Notify from "components/Notify"
 
 
-const Home = () => { 
-  const theme = useTheme()
+const Home = ({ locale }) => { 
   const [msg, setMsg] = useState(['info', ""])
 
   const [{
@@ -25,7 +24,6 @@ const Home = () => {
   const [{
     createTask, setTasks, toggleTaskChange, deleteTask
   }, tasks] = useContract({ web3, account, setMsg })
-  console.log('Theme', theme.palette.primary.light)
 
   return (
       <Box
@@ -37,20 +35,14 @@ const Home = () => {
           zIndex: 0,
           height: '100%',
           backgroundColor: 'primary.light',
-          // border: '1px solid red',
-        }}
-        // className={theme.palette.mode === 'light'
-        //   ? 'App'
-        //   : 'App-dark'
-        // }
-        >
+        }}>
         <AppBar {...{
           wallet, account, network, connectNetwork,
-          disconnectNetwork, setMsg
+          disconnectNetwork, setMsg, locale
         }} />
         <Main {...{
           createTask, setTasks, toggleTaskChange,
-          deleteTask
+          deleteTask, locale
           }} tasks={tasks} />
         <SnackbarProvider maxSnack={3}>
           <Notify {...{ msg }} />

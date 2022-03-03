@@ -2,12 +2,20 @@
   "name": "my-app",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": " next dev",
+    "build": "i18nexus pull && next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "test:coverage": "jest --coverage --colors"
+    "test": "jest --coverage --colors",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
+    "migrate:undo:all": "node_modules/.bin/sequelize db:migrate:undo:all",
+    "seed": "node_modules/.bin/sequelize db:seed:all",
+    "seed:undo": "node_modules/.bin/sequelize db:seed:undo",
+    "seed:undo:all": "node_modules/.bin/sequelize db:seed:undo:all",
+    "lint-fix": "eslint ./src/** -c .eslintrc.json --fix --ext js,jsx",
+    "drop:db": "cross-env NODE_ENV=development node_modules/.bin/sequelize db:drop tache",
+    "create:db": "cross-env NODE_ENV=development node_modules/.bin/sequelize db:create tache"
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -18,13 +26,22 @@
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.67",
     "@mui/material": "^5.4.0",
+    "bcrypt": "^5.0.1",
+    "cookie": "^0.4.2",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "next": "^12.0.10",
+    "next-i18next": "^10.3.0",
     "notistack": "^2.0.3",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "prop-types": "^15.8.1",
     "react": "^18.0.0-rc.0",
     "react-dom": "^18.0.0-rc.0",
     "react-transition-group": "^4.4.2",
+    "sequelize": "^5.22.3",
     "uuid": "^8.3.2",
     "web3": "^1.7.0"
   },
@@ -32,17 +49,32 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "enzyme": "^3.11.0",
     "eslint": "8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.0.10",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-jsconfig": "^1.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "i18nexus-cli": "^2.0.2",
     "jest": "^27.5.1",
-    "jest-canvas-mock": "^2.3.1"
+    "jest-canvas-mock": "^2.3.1",
+    "prettier": "^2.5.1",
+    "sequelize-cli": "^6.4.1"
   },
   "jest": {
     "transform": {
-      "^.+\\.[t|j]sx?$": ["babel-jest", {
-        "presets": ["@babel/preset-env", "next/babel"]
-      }]
+      "^.+\\.[t|j]sx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            "@babel/preset-env",
+            "next/babel"
+          ]
+        }
+      ]
     },
     "setupFiles": [
       "jest-canvas-mock"
@@ -76,14 +108,6 @@
       "!<rootDir>/build/**/*.*",
       "!<rootDir>/cypress/**/*.*"
     ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 90,
-        "statements": 90
-      }
-    },
     "moduleNameMapper": {
       "\\.(jpg|JPG|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|scss|less)$": "<rootDir>/__mocks__/styleMock.js"

@@ -1,14 +1,12 @@
 {
   "extends": [
     // "next/babel",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "eslint:recommended",
     "airbnb",
+    // "plugin:react/recommended",
     "airbnb/hooks",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:jsx-a11y/recommended",
+    // "plugin:import/errors",
+    // "plugin:import/warnings",
+    // "plugin:jsx-a11y/recommended",
     // "plugin:react-hooks/recommended",
     "prettier"
   ],
@@ -20,7 +18,7 @@
     "ecmaFeatures": {
       "jsx": true // enable linting for jsx files
     },
-    "ecmaVersion": 11,
+    "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "settings": {
@@ -33,10 +31,11 @@
     // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
     "react/react-in-jsx-scope": "off",
    // NextJs specific fix: allow jsx syntax in js files
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx", ".ts"] }], //should add ".ts" if typescript project
     "react/display-name": 1,
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "react/require-default-props": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "import/no-unresolved": "off"
   }
 }
